@@ -9,7 +9,7 @@
   <meta name="description"
     content="Pemasok pompa industri, genset, panel listrik, dan perkakas teknik. Pesan langsung melalui admin WhatsApp." />
   <link rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -265,6 +265,7 @@
 
     .cols {
       display: grid;
+      color: #e3e0dc;
       gap: 40px;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       margin-top: 36px;
@@ -272,7 +273,7 @@
 
     .cols>div {
       border-top: 2px solid var(--mr);
-      padding-top: 16px;
+      padding-top: 100px;
     }
 
     .cols p {
@@ -355,6 +356,7 @@
       display: flex;
       height: 100%;
       transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+      padding-bottom: 24px;
     }
 
     .sl {
@@ -502,6 +504,256 @@
       background: #17593a;
     }
 
+    /* Scroll-triggered animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal.fade-up {
+      transform: translateY(32px);
+    }
+
+    .reveal.fade-left {
+      transform: translateX(-48px);
+    }
+
+    .reveal.fade-right {
+      transform: translateX(48px);
+    }
+
+    .reveal.scale-in {
+      transform: scale(0.92);
+    }
+
+    .reveal.visible.fade-up,
+    .reveal.visible.fade-left,
+    .reveal.visible.fade-right,
+    .reveal.visible.scale-in {
+      transform: none;
+    }
+
+    .reveal[data-delay="1"] {
+      transition-delay: 0.1s;
+    }
+
+    .reveal[data-delay="2"] {
+      transition-delay: 0.2s;
+    }
+
+    .reveal[data-delay="3"] {
+      transition-delay: 0.3s;
+    }
+
+    .reveal[data-delay="4"] {
+      transition-delay: 0.4s;
+    }
+
+    .stagger>* {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .stagger.visible>*:nth-child(1) {
+      transition-delay: 0s;
+    }
+
+    .stagger.visible>*:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .stagger.visible>*:nth-child(3) {
+      transition-delay: 0.2s;
+    }
+
+    .stagger.visible>*:nth-child(4) {
+      transition-delay: 0.3s;
+    }
+
+    .stagger.visible>*:nth-child(5) {
+      transition-delay: 0.4s;
+    }
+
+    .stagger.visible>*:nth-child(6) {
+      transition-delay: 0.5s;
+    }
+
+    .stagger.visible>* {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* product carousel stagger (cards inside .pc .tr) */
+    .pc .tr>.card {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(1) {
+      transition-delay: 0s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(3) {
+      transition-delay: 0.2s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(4) {
+      transition-delay: 0.3s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(5) {
+      transition-delay: 0.4s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(6) {
+      transition-delay: 0.5s;
+    }
+
+    .pc.reveal.visible .tr>.card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* Product carousel */
+    .pc.reveal {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      transform: none;
+    }
+
+    .pc.reveal.visible {
+      opacity: 1;
+    }
+
+    .pc.reveal.visible .tr>.card {
+      opacity: 1;
+      transform: none;
+    }
+
+    .pc {
+      position: relative;
+      margin-top: 36px;
+    }
+
+    .pc .tr {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    .pc .tr .card {
+      flex: 0 0 calc((100% - 3 * 20px) / 4);
+    }
+
+    .pc .ar {
+      position: absolute;
+      top: 50%;
+      z-index: 3;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--ln);
+      background: var(--sf);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .pc .ar:hover {
+      background: var(--mr);
+      color: #fff;
+      border-color: var(--mr);
+    }
+
+    .pc .ar:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .pc .ar.l {
+      left: -8px;
+    }
+
+    .pc .ar.r {
+      right: -8px;
+    }
+
+    .pc .dt {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .pc .dt button {
+      width: 32px;
+      height: 4px;
+      border: 0;
+      border-radius: 2px;
+      background: var(--ln);
+      cursor: pointer;
+      padding: 0;
+      transition: width 0.3s;
+    }
+
+    .pc .dt button[aria-current="true"] {
+      background: var(--mr);
+      width: 40px;
+    }
+
+    @media (max-width: 980px) {
+      .pc .tr .card {
+        flex: 0 0 calc((100% - 20px) / 3);
+      }
+
+      .pc .ar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .pc .tr .card {
+        flex: 0 0 100%;
+      }
+
+      .pc .tr {
+        gap: 16px;
+      }
+
+      .pc {
+        margin-top: 28px;
+      }
+    }
+
     @media (max-width: 820px) {
       .ar {
         display: none;
@@ -561,7 +813,7 @@
   <!-- HEADER & NAVIGASI -->
   <header>
     <div class="wrap nav">
-      <a href="#" class="logo"><img src="Logo.png" alt="Logo">Assula Jaya Selalu</a>
+      <a href="#" class="logo"><img src="Foto/Logo.png" alt="Logo">Assula Jaya Selalu</a>
       <button id="mb" aria-label="Buka menu" aria-expanded="false">&#9776;</button>
       <nav id="nv" aria-label="Navigasi utama">
         <a href="#" class="on">Beranda</a>
@@ -578,20 +830,17 @@
     <!-- 1. HERO SLIDER BANNER -->
     <section class="hs" aria-roledescription="carousel" aria-label="Sorotan perusahaan">
       <div class="tr" id="tr">
-        <div class="sl"><img src="Foto/Foto1.jpg"
-            onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80'"
-            alt="Pompa Industri"></div>
-        <div class="sl"><img src="Foto/Foto2.jpg"
-            onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80'"
-            alt="Genset Industri"></div>
-        <div class="sl"><img src="Foto/Foto3.jpg"
-            onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80'"
-            alt="Panel Listrik"></div>
+        <div class="sl"><img src="Foto/Foto1.jpg" alt="Pompa Industri"></div>
+        <div class="sl"><img src="Foto/Foto2.jpg" alt="Genset Industri"></div>
+        <div class="sl"><img src="Foto/Foto3.jpg" alt="Logo.png"></div>
+
       </div>
       <div class="ov">
         <div class="wrap">
           <h1>PT Assula Jaya Selalu</h1>
-          <p class="t">Solusi Pompa Industri, Genset, Panel Listrik, dan Perkakas Teknik Berstandar Tinggi.</p>
+          <p class="t">Your Intelligent Supply & Distribution Partner <br>— Solusi Cepat, Tepat, dan Andal untuk
+            Kebutuhan
+            Industri Anda.</p>
           <div class="row">
             <a class="btn" href="#produk">Lihat Katalog Produk</a>
             <a class="btn ghost" href="https://wa.me/6281234567890?text=Halo%20Admin%20PT%20Assula%20Jaya%20Selalu"
@@ -612,82 +861,134 @@
     <!-- 2. KATEGORI & KATALOG PRODUK -->
     <section class="sec" id="produk">
       <div class="wrap">
-        <h2>Kategori Produk</h2>
-        <p class="lead">Pilih kategori untuk melihat katalog, atau tanyakan langsung ke admin.</p>
+        <h2 class="reveal fade-up">Kategori Produk</h2>
+        <p class="lead reveal fade-up">Pilih kategori untuk melihat katalog, atau tanyakan langsung ke admin.</p>
 
         <!-- Kamu bisa menambah / merubah Produk langsung dari sintaks HTML di bawah ini -->
-        <div class="grid">
+        <div class="pc reveal">
+          <div class="tr" id="pcTr">
 
-          <!-- Card Produk 1 -->
-          <a class="card"
-            href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Pompa%20Sentrifugal%20SK-150"
-            target="_blank">
-            <img class="pv"
-              src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
-              alt="Pompa Sentrifugal SK-150">
-            <div class="b">
-              <small>Pompa</small>
-              <h3>Pompa Sentrifugal SK-150</h3>
-              <p>Pompa air kapasitas besar untuk pabrik, irigasi, dan pendingin proses.</p>
-              <span class="tag">Pesan via WhatsApp</span>
-            </div>
-          </a>
+            <!-- Card Produk 1 -->
+            <a class="card"
+              href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Pompa%20Sentrifugal%20SK-150"
+              target="_blank">
+              <img class="pv"
+                src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
+                alt="Pompa Sentrifugal SK-150">
+              <div class="b">
+                <small>Pompa</small>
+                <h3>Pompa Sentrifugal SK-150</h3>
+                <p>Pompa air kapasitas besar untuk pabrik, irigasi, dan pendingin proses.</p>
+                <span class="tag">Pesan via WhatsApp</span>
+              </div>
+            </a>
 
-          <!-- Card Produk 2 -->
-          <a class="card"
-            href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Pompa%20Submersible%20SK-40"
-            target="_blank">
-            <img class="pv"
-              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80"
-              alt="Pompa Submersible SK-40">
-            <div class="b">
-              <small>Pompa</small>
-              <h3>Pompa Submersible SK-40</h3>
-              <p>Pompa celup untuk drainase, sumur dalam, dan penanganan air kotor.</p>
-              <span class="tag">Pesan via WhatsApp</span>
-            </div>
-          </a>
+            <!-- Card Produk 2 -->
+            <a class="card"
+              href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Pompa%20Submersible%20SK-40"
+              target="_blank">
+              <img class="pv"
+                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80"
+                alt="Pompa Submersible SK-40">
+              <div class="b">
+                <small>Pompa</small>
+                <h3>Pompa Submersible SK-40</h3>
+                <p>Pompa celup untuk drainase, sumur dalam, dan penanganan air kotor.</p>
+                <span class="tag">Pesan via WhatsApp</span>
+              </div>
+            </a>
 
-          <!-- Card Produk 3 -->
-          <a class="card"
-            href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Genset%20Diesel%20100%20kVA"
-            target="_blank">
-            <img class="pv"
-              src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80"
-              alt="Genset Diesel 100 kVA">
-            <div class="b">
-              <small>Genset</small>
-              <h3>Genset Diesel 100 kVA</h3>
-              <p>Genset siaga untuk pabrik dan gedung komersial dengan kabin kedap suara.</p>
-              <span class="tag">Pesan via WhatsApp</span>
-            </div>
-          </a>
+            <!-- Card Produk 3 -->
+            <a class="card"
+              href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Genset%20Diesel%20100%20kVA"
+              target="_blank">
+              <img class="pv"
+                src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80"
+                alt="Genset Diesel 100 kVA">
+              <div class="b">
+                <small>Genset</small>
+                <h3>Genset Diesel 100 kVA</h3>
+                <p>Genset siaga untuk pabrik dan gedung komersial dengan kabin kedap suara.</p>
+                <span class="tag">Pesan via WhatsApp</span>
+              </div>
+            </a>
 
-          <!-- Card Produk 4 -->
-          <a class="card"
-            href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Panel%20Distribusi%20LVMDP"
-            target="_blank">
-            <img class="pv"
-              src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80"
-              alt="Panel Distribusi LVMDP">
-            <div class="b">
-              <small>Panel Listrik</small>
-              <h3>Panel Distribusi LVMDP</h3>
-              <p>Panel utama tegangan rendah, dirakit sesuai gambar kerja proyek Anda.</p>
-              <span class="tag">Pesan via WhatsApp</span>
-            </div>
-          </a>
+            <!-- Card Produk 4 -->
+            <a class="card"
+              href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Panel%20Distribusi%20LVMDP"
+              target="_blank">
+              <img class="pv"
+                src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80"
+                alt="Panel Distribusi LVMDP">
+              <div class="b">
+                <small>Panel Listrik</small>
+                <h3>Panel Distribusi LVMDP</h3>
+                <p>Panel utama tegangan rendah, dirakit sesuai gambar kerja proyek Anda.</p>
+                <span class="tag">Pesan via WhatsApp</span>
+              </div>
+            </a>
 
+            <!-- Card Produk 5 -->
+            <a class="card"
+              href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Panel%20Distribusi%20LVMDP"
+              target="_blank">
+              <img class="pv"
+                src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80"
+                alt="Panel Distribusi LVMDP">
+              <div class="b">
+                <small>Panel Listrik</small>
+                <h3>Panel Distribusi LVMDP</h3>
+                <p>Panel utama tegangan rendah, dirakit sesuai gambar kerja proyek Anda.</p>
+                <span class="tag">Pesan via WhatsApp</span>
+              </div>
+            </a>
+
+            <!-- Card Produk 5 -->
+            <a class="card"
+              href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Panel%20Distribusi%20LVMDP"
+              target="_blank">
+              <img class="pv"
+                src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80"
+                alt="Panel Distribusi LVMDP">
+              <div class="b">
+                <small>Panel Listrik</small>
+                <h3>Panel Distribusi LVMDP</h3>
+                <p>Panel utama tegangan rendah, dirakit sesuai gambar kerja proyek Anda.</p>
+                <span class="tag">Pesan via WhatsApp</span>
+              </div>
+            </a>
+
+            <!-- Card Produk 5 -->
+            <a class="card"
+              href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Panel%20Distribusi%20LVMDP"
+              target="_blank">
+              <img class="pv"
+                src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80"
+                alt="Panel Distribusi LVMDP">
+              <div class="b">
+                <small>Panel Listrik</small>
+                <h3>Panel Distribusi LVMDP</h3>
+                <p>Panel utama tegangan rendah, dirakit sesuai gambar kerja proyek Anda.</p>
+                <span class="tag">Pesan via WhatsApp</span>
+              </div>
+            </a>
+
+
+          </div>
+          <button class="ar l" id="pcPrev" aria-label="Produk sebelumnya">&#8249;</button>
+          <button class="ar r" id="pcNext" aria-label="Produk berikutnya">&#8250;</button>
+          <div class="dt" id="pcDots">
+          </div>
         </div>
-      </div>
     </section>
 
     <!-- 3. CARA PEMESANAN -->
     <section class="sec alt">
       <div class="wrap">
-        <h2>Pesan langsung lewat admin</h2>
-        <p class="lead">Tanpa keranjang belanja. Anda berbicara dengan admin sales yang siap memberi penawaran.</p>
-        <div class="cols flow">
+        <h2 class="reveal fade-up">Pesan langsung lewat admin</h2>
+        <p class="lead reveal fade-up">Tanpa keranjang belanja. Anda berbicara dengan admin sales yang siap memberi
+          penawaran.</p>
+        <div class="cols flow reveal stagger">
           <div>
             <h3>Pilih produk</h3>
             <p>Buka katalog dan temukan produk yang Anda butuhkan.</p>
@@ -709,15 +1010,15 @@
       </div>
     </section>
 
-    <!-- 4. KEUNGGULAN KAMI / TENTANG -->
+    <!-- 4. TENTANG -->
     <section class="sec" id="profil">
       <div class="wrap split">
-        <div>
+        <div class="reveal fade-left">
           <h2>Dari gudang kami langsung ke lokasi proyek Anda.</h2>
           <p class="lead">PT Assula Jaya Selalu berawal dari toko suku cadang pompa kecil. Kini kami melayani pabrik,
             kontraktor MEP, dan instansi dengan tim teknis yang paham kebutuhan lapangan.</p>
         </div>
-        <div class="cols" style="margin-top:0; grid-template-columns:1fr">
+        <div class="cols reveal stagger" style="margin-top:0; grid-template-columns:1fr">
           <div>
             <h3>Rekomendasi teknis</h3>
             <p>Insinyur kami membantu memilih kapasitas yang tepat, bukan yang termahal.</p>
@@ -736,18 +1037,26 @@
 
     <!-- 5. CALL TO ACTION (CTA) BANNER -->
     <section class="wrap" id="kontak">
-      <div class="band">
+      <div class="band reveal scale-in">
         <h2>Butuh penawaran untuk proyek Anda?</h2>
         <a class="btn wa"
           href="https://wa.me/6281234567890?text=Halo%20Admin%20PT%20Assula%20Jaya%20Selalu,%20saya%20ingin%20meminta%20penawaran"
-          target="_blank" rel="noopener">Chat Admin di WhatsApp</a>
+          target="_blank" rel="noopener" aria-label="Chat admin via WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="22" height="22" fill="#fff"
+            aria-hidden="true">
+            <path
+              d="m19.11 19.11-.02.01a.38.38 0 0 1-.38-.08.4.4 0 0 1-.16-.37 4.32 4.32 0 0 0-.31-1.34c-.16.09-.32.18-.52.26a.39.39 0 0 1-.5-.47c.19-.66.45-1.29.76-1.92a.39.39 0 0 0-.73-.44 8.25 8.25 0 0 0-1.31 1.19.39.39 0 0 1-.67-.14 7.7 7.7 0 0 1-.7-2.14.39.39 0 0 0-.77-.01 16 16 0 0 1-2.17 3.21.39.39 0 0 1-.52-.01 7.51 7.51 0 0 1-.95-.91.39.39 0 0 0-.73 0 9.2 9.2 0 0 0 .04 2.71.39.39 0 0 1-.25.48 7.77 7.77 0 0 0 2.11 1.27.39.39 0 0 1-.12.69 8.08 8.08 0 0 0 2.62 2.29.39.39 0 0 1-.24.69 8.33 8.33 0 0 0 1.73.59.39.39 0 0 1 .29.43 9.3 9.3 0 0 0 .52 2.18.39.39 0 0 1-.19.52 7.77 7.77 0 0 0-1.37 1.12.39.39 0 0 0 .1 5.33zM16 1.6a14.36 14.36 0 0 0-5.2 27.62l3-1.58a12.6 12.6 0 0 1 2.19-.24 12.56 12.56 0 0 1 7.9 2.75 14.29 14.29 0 0 0-13.8-17.3 12.47 12.47 0 0 1 3.53-6.42 12.25 12.25 0 0 1-2.44-3.22 14.28 14.28 0 0 0-3.26 5.77A14.37 14.37 0 0 0 2 16c0 2.19.58 4.23 1.59 6a12.3 12.3 0 0 1 1.73-4.94.39.39 0 0 0-.28-.63 8.23 8.23 0 0 1-3.11-3.71A14.37 14.37 0 0 1 2 16c0-3.87 1.49-7.42 3.91-10.07A12.4 12.4 0 0 1 16 3.42c1.07.02 2.11.17 3.11.44a12.6 12.6 0 0 1 2.65 1A14.33 14.33 0 0 0 16 1.6z" />
+            <path fill="#fff"
+              d="M28.05 11.9a.39.39 0 0 1-.38-.31 10.29 10.29 0 0 0-6.85-7.61.39.39 0 0 1-.11-.69 11.29 11.29 0 0 1 8.43 2.68.39.39 0 0 1-.15.65 10.26 10.26 0 0 0-3.36 2.69.39.39 0 0 1-.59-.51 12.09 12.09 0 0 1 4.46-4.65.39.39 0 0 0-.12-.7 12.07 12.07 0 0 0-9.18 3.51.39.39 0 0 1-.67-.39 12.47 12.47 0 0 1 7.82-5.16.39.39 0 0 1 .39.41 11.28 11.28 0 0 1-3.11 7.29.39.39 0 0 1-.58-.46 10.27 10.27 0 0 0 1.52-3.46.39.39 0 0 0-.25-.58 8.4 8.4 0 0 1-1.31-.82.39.39 0 0 1 .14-.68 11.34 11.34 0 0 1 4.25-2.92.39.39 0 0 1 .32.65 9.5 9.5 0 0 0-1.27 3.2.39.39 0 0 1-.54.27z" />
+          </svg>
+        </a>
       </div>
     </section>
 
   </main>
 
   <!-- FOOTER -->
-  <footer>
+  <footer style="background-color: rgb(37, 0, 0);">
     <div class="wrap">
       <div class="cols">
         <div>
@@ -779,15 +1088,11 @@
           </p>
         </div>
       </div>
-      <p style="margin-top: 36px; opacity: 0.7;" align="center">
+      <p style="margin-top: 36px; opacity: 0.7; text-align: center; color: white; font-size: 13px;">
         © 2026 PT Assula Jaya Selalu. All rights reserved.
       </p>
     </div>
   </footer>
-
-  <!-- FLOATING BUTTON WHATSAPP -->
-  <a id="fw" class="fw" target="_blank" rel="noopener" aria-label="Chat admin via WhatsApp"
-    href="https://wa.me/6281234567890?text=Halo%20Admin%20PT%20Assula%20Jaya%20Selalu">Chat Admin</a>
 
   <!-- JAVASCRIPT RINGAN (Hanya untuk Slider & Menu Mobile) -->
   <script>
@@ -841,6 +1146,77 @@
     }
 
     runSlider();
+
+    // Product carousel
+    (function () {
+      const tr = document.getElementById("pcTr");
+      const prevBtn = document.getElementById("pcPrev");
+      const nextBtn = document.getElementById("pcNext");
+      const dotsWrap = document.getElementById("pcDots");
+      if (!tr) return;
+      const cards = tr.querySelectorAll(".card");
+      const total = cards.length;
+      if (total === 0) return;
+      let idx = 0;
+      let visible = 4;
+
+      const setButtons = (max) => {
+        if (prevBtn) prevBtn.disabled = idx <= 0;
+        if (nextBtn) nextBtn.disabled = idx >= max - 1;
+      };
+
+      const updateView = () => {
+        const perView = Math.min(visible, total);
+        const cardW = 100 / perView;
+        tr.style.transform = `translateX(-${idx * cardW}%)`;
+        dotsWrap.innerHTML = "";
+        const max = Math.max(1, total - perView + 1);
+        if (idx > max - 1) idx = max - 1;
+        for (let i = 0; i < max; i++) {
+          const b = document.createElement("button");
+          b.setAttribute("aria-label", `Produk ${i + 1}`);
+          if (i === idx) b.setAttribute("aria-current", "true");
+          b.onclick = () => { idx = i; updateView(); };
+          dotsWrap.appendChild(b);
+        }
+        setButtons(max);
+      };
+
+      if (prevBtn) {
+        prevBtn.onclick = () => { if (idx > 0) { idx--; updateView(); } };
+      }
+      if (nextBtn) {
+        nextBtn.onclick = () => {
+          const max = Math.max(1, total - visible + 1);
+          if (idx < max - 1) { idx++; updateView(); }
+        };
+      }
+
+      const mq = (w) => window.matchMedia(`(max-width: ${w}px)`).matches;
+      const resize = () => { visible = mq(640) ? 1 : mq(980) ? 3 : 4; updateView(); };
+      window.addEventListener("resize", resize);
+      resize();
+    })();
+
+    // Scroll-triggered reveal animations (Intersection Observer)
+    (function () {
+      if (typeof IntersectionObserver === "undefined") return;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const els = document.querySelectorAll(".reveal, .stagger");
+      if (reduce) {
+        els.forEach(function (e) { e.classList.add("visible"); });
+        return;
+      }
+      const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+      els.forEach(function (e) { io.observe(e); });
+    })();
   </script>
 </body>
 
