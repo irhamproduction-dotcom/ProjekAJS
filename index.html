@@ -35,6 +35,8 @@
     html {
       scroll-padding-top: env(safe-area-inset-top, 0px);
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     * {
@@ -43,9 +45,18 @@
 
     body {
       margin: 0;
+      padding: 0;
       background: var(--bg);
       color: var(--ink);
       font: 400 16px/1.65 "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+
+    #app {
+      overflow-x: hidden;
+      width: 100%;
     }
 
     a {
@@ -84,6 +95,14 @@
       max-width: 1490px;
       margin: auto;
       padding: 0 clamp(16px, 4vw, 32px);
+    }
+
+    .wrap h2 {
+      margin-left: 40px;
+    }
+
+    .wrap p {
+      margin-left: 40px;
     }
 
     .sec {
@@ -145,79 +164,283 @@
       border-color: #1d6f42;
     }
 
+    /* ── SIG-Style Corporate Navigation & Header ───────────────── */
     header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.45) 60%, transparent 100%);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+
+    header.scrolled {
       position: sticky;
-      top: env(safe-area-inset-top, 0px);
-      z-index: 50;
-      background: color-mix(in srgb, var(--bg) 95%, transparent);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--ln);
+      top: 0;
+      background: rgba(18, 18, 20, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .nav {
+    /* Top Ticker Bar (IDX/Stock Info ala SIG) */
+    .top-ticker-bar {
       display: flex;
+      justify-content: flex-end;
+      padding: 6px clamp(16px, 4vw, 32px);
+      max-width: 1490px;
+      margin: 0 auto;
+    }
+
+    .ticker-pill {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      height: 68px;
-      gap: 16px;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      color: #18181b;
+      padding: 4px 14px;
+      border-radius: 4px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      flex: none;
-    }
-
-    .logo img {
-      height: 36px;
-      width: auto;
-    }
-
-    nav {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      margin-left: auto;
-    }
-
-    nav a {
-      font-weight: 500;
-      font-size: 0.92rem;
-      color: var(--mut);
-      padding: 7px 13px;
-      border-radius: 7px;
-      border-bottom: none;
-      transition: background 0.14s, color 0.14s;
-    }
-
-    nav a:hover,
-    nav a.on {
-      color: var(--ink);
-      background: var(--tint);
-    }
-
-    nav a.on {
-      color: var(--mr);
+    .ticker-pill .ticker-tag {
+      color: #555;
       font-weight: 600;
     }
 
-    .nav-cta {
-      margin-left: 8px;
-      padding: 9px 18px;
-      font-size: 0.88rem;
+    .ticker-pill .ticker-val {
+      color: #c92a2a;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
     }
 
+    .ticker-pill .ticker-arrow {
+      font-size: 0.85em;
+    }
+
+    /* Main Navigation Bar */
+    .nav {
+      padding-top: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 20px;
+    }
+
+    /* Brand Logo ala SIG */
+    .logo-sig {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      flex: none;
+    }
+
+    .logo-sig-icon {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+    }
+
+    .logo-sig-brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo-sig-text {
+      font-size: 1.85rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #fff;
+      font-family: "Montserrat", sans-serif;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    }
+
+    .logo-sig-sub {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.8);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Desktop Navigation Menu Links */
+    .sig-nav-wrap {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-left: auto;
+    }
+
+    .sig-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sig-nav-item {
+      position: relative;
+    }
+
+    .sig-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.92);
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .sig-nav-link svg.caret {
+      width: 10px;
+      height: 10px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      transition: transform 0.2s ease;
+      opacity: 0.85;
+    }
+
+    .sig-nav-link:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .sig-nav-item:hover .sig-nav-link svg.caret {
+      transform: translateY(2px);
+    }
+
+    /* Dropdown Menus */
+    .sig-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      background: rgba(24, 24, 27, 0.97);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      padding: 8px 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+      z-index: 60;
+    }
+
+    .sig-nav-item:hover .sig-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .sig-dropdown a {
+      display: block;
+      padding: 9px 18px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.84rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .sig-dropdown a:hover {
+      background: rgba(139, 0, 0, 0.7);
+      color: #fff;
+    }
+
+    /* Actions Right: EN Lang Switcher & Search ala SIG */
+    .sig-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-left: 10px;
+      border-left: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .sig-lang-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #c92a2a;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(201, 42, 42, 0.4);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .sig-lang-badge:hover {
+      background: #a31d1d;
+      transform: scale(1.05);
+    }
+
+    .sig-search-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #fff;
+      background: none;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .sig-search-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .sig-search-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Hamburger button */
     #mb {
       display: none;
-      background: none;
-      border: 1px solid var(--ln);
-      color: var(--ink);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
       border-radius: 7px;
       padding: 8px 11px;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       line-height: 1;
       cursor: pointer;
       flex: none;
@@ -225,7 +448,7 @@
     }
 
     #mb:hover {
-      background: var(--tint);
+      background: rgba(255, 255, 255, 0.25);
     }
 
     .row {
@@ -355,7 +578,7 @@
       max-width: 70ch;
     }
 
-    /* Stats Bar */
+    /* ── Stats Bar ─────────────────────────────────────── */
     .statsbar {
       background: var(--sf);
       border-bottom: 1px solid var(--ln);
@@ -413,7 +636,7 @@
       margin-top: 3px;
     }
 
-    /* Steps */
+    /* ── Steps (Cara Pemesanan) ────────────────────────── */
     .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -456,7 +679,11 @@
       margin: 0;
     }
 
-    /* Profil */
+    .step-connector {
+      display: none;
+    }
+
+    /* ── Profil (About Minimalis) ─────────────────────── */
     .about-wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -577,7 +804,7 @@
       }
     }
 
-    /* CTA Banner */
+    /* ── CTA Banner ────────────────────────────────────── */
     .cta-section {
       padding: 72px 0;
     }
@@ -665,7 +892,7 @@
       text-align: center;
     }
 
-    /* Footer */
+    /* ── Footer ────────────────────────────────────────── */
     .site-footer {
       background: #1a0000;
       color: rgba(255, 255, 255, 0.55);
@@ -764,7 +991,7 @@
 
     .footer-bottom {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
@@ -773,7 +1000,7 @@
       color: rgba(255, 255, 255, 0.3);
     }
 
-    /* Responsive */
+    /* ── Responsive tambahan ───────────────────────────── */
     @media (max-width: 980px) {
       .statsbar-inner {
         grid-template-columns: 1fr 1fr;
@@ -781,6 +1008,11 @@
 
       .statsbar-item:nth-child(2) {
         border-right: none;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
       }
 
       .cta-band {
@@ -824,8 +1056,10 @@
       position: relative;
       overflow: hidden;
       background: #141416;
-      height: calc(100vh - 68px);
-      min-height: 500px;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      min-height: 600px;
       touch-action: pan-y;
       user-select: none;
     }
@@ -841,12 +1075,14 @@
     .tr {
       display: flex;
       height: 100%;
+      width: 100%;
       transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
-      padding-bottom: 24px;
+      padding-bottom: 0;
     }
 
     .sl {
       flex: 0 0 100%;
+      width: 100%;
       height: 100%;
       position: relative;
     }
@@ -856,6 +1092,7 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
+      display: block;
     }
 
     .ov {
@@ -866,6 +1103,7 @@
       align-items: center;
       color: #fff;
       pointer-events: none;
+      padding-top: 60px;
     }
 
     .ov .wrap {
@@ -873,23 +1111,13 @@
       padding: 0 70px;
     }
 
-    .ov-badge {
-      display: inline-block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-
     .ov h1 {
-      max-width: 20ch;
+      max-width: 13ch;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
     .ov .t {
-      max-width: 52ch;
+      max-width: 46ch;
       margin: 20px 0 30px;
       font-size: 1.08rem;
       opacity: 0.93;
@@ -982,6 +1210,24 @@
       background: var(--mr);
     }
 
+    .fw {
+      position: fixed;
+      right: 18px;
+      bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+      z-index: 15;
+      background: #1d6f42;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .fw:hover {
+      background: #17593a;
+    }
+
     /* Scroll-triggered animations */
     .reveal {
       opacity: 0;
@@ -1017,15 +1263,99 @@
       transform: none;
     }
 
+    .reveal[data-delay="1"] {
+      transition-delay: 0.1s;
+    }
+
+    .reveal[data-delay="2"] {
+      transition-delay: 0.2s;
+    }
+
+    .reveal[data-delay="3"] {
+      transition-delay: 0.3s;
+    }
+
+    .reveal[data-delay="4"] {
+      transition-delay: 0.4s;
+    }
+
     .stagger>* {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
+    .stagger.visible>*:nth-child(1) {
+      transition-delay: 0s;
+    }
+
+    .stagger.visible>*:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .stagger.visible>*:nth-child(3) {
+      transition-delay: 0.2s;
+    }
+
+    .stagger.visible>*:nth-child(4) {
+      transition-delay: 0.3s;
+    }
+
+    .stagger.visible>*:nth-child(5) {
+      transition-delay: 0.4s;
+    }
+
+    .stagger.visible>*:nth-child(6) {
+      transition-delay: 0.5s;
+    }
+
     .stagger.visible>* {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* product carousel stagger (cards inside .pc .tr) */
+    .pc .tr>.card {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(1) {
+      transition-delay: 0s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(3) {
+      transition-delay: 0.2s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(4) {
+      transition-delay: 0.3s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(5) {
+      transition-delay: 0.4s;
+    }
+
+    .pc.reveal.visible .tr>.card:nth-child(6) {
+      transition-delay: 0.5s;
+    }
+
+    .pc.reveal.visible .tr>.card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
     }
 
     /* Product carousel container & section */
@@ -1042,14 +1372,16 @@
     .pc {
       position: relative;
       margin-top: 36px;
-      padding: 10px 48px 42px;
+      padding: 10px 0 42px;
+      width: 100%;
+      margin-left: 0;
     }
 
     .pc-viewport {
       overflow: hidden;
-      border-radius: 14px;
-      padding: 6px 2px 14px;
-      margin: -6px -2px -14px;
+      padding: 12px clamp(16px, 4vw, 48px) 18px;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black clamp(24px, 5vw, 64px), black calc(100% - clamp(24px, 5vw, 64px)), transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black clamp(24px, 5vw, 64px), black calc(100% - clamp(24px, 5vw, 64px)), transparent 100%);
     }
 
     .pc .tr {
@@ -1060,7 +1392,7 @@
     }
 
     .pc .tr .card {
-      flex: 0 0 calc((100% - 72px) / 4);
+      flex: 0 0 calc((100% - 3 * 24px) / 4);
       min-width: 0;
       border-radius: 14px;
       border: 1px solid var(--ln);
@@ -1204,13 +1536,14 @@
     }
 
     .pc .ar.l {
-      left: 0;
+      left: clamp(12px, 2.5vw, 32px);
     }
 
     .pc .ar.r {
-      right: 0;
+      right: clamp(12px, 2.5vw, 32px);
     }
 
+    /* Dots indicator */
     .pc .dt {
       display: flex;
       justify-content: center;
@@ -1241,11 +1574,11 @@
 
     @media (max-width: 1100px) {
       .pc {
-        padding: 10px 42px 38px;
+        padding: 10px 0 38px;
       }
 
       .pc .tr .card {
-        flex: 0 0 calc((100% - 40px) / 3);
+        flex: 0 0 calc((100% - 2 * 20px) / 3);
       }
 
       .pc .tr {
@@ -1291,43 +1624,67 @@
         gap: 32px;
       }
 
+      /* Tampilkan burger, sembunyikan nav desktop pada layar mobile */
       #mb {
         display: block;
       }
 
-      .nav-cta {
-        display: none;
-      }
-
-      nav {
+      .sig-nav-wrap {
         display: none;
         position: absolute;
-        top: 68px;
+        top: 100%;
         left: 0;
         right: 0;
         z-index: 49;
-        background: var(--bg);
-        border-bottom: 1px solid var(--ln);
-        border-top: 1px solid var(--ln);
+        background: rgba(18, 18, 20, 0.98);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         flex-direction: column;
         align-items: stretch;
-        padding: 8px 16px 12px;
-        gap: 2px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+        padding: 16px 20px 24px;
+        gap: 12px;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
       }
 
-      nav.o {
+      .sig-nav-wrap.o {
         display: flex;
       }
 
-      nav a {
-        padding: 11px 12px;
-        border-radius: 7px;
-        font-size: 0.95rem;
+      .sig-nav-menu {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
       }
 
-      .sec {
-        padding: 52px 0;
+      .sig-nav-link {
+        padding: 11px 14px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        justify-content: space-between;
+      }
+
+      .sig-dropdown {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
+        border: none;
+        box-shadow: none;
+        margin: 4px 0 8px 12px;
+        display: none;
+      }
+
+      .sig-nav-item.active-mobile .sig-dropdown {
+        display: block;
+      }
+
+      .sig-actions {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        padding-top: 14px;
+        padding-left: 0;
+        justify-content: space-between;
       }
 
       .band {
@@ -1338,55 +1695,224 @@
 </head>
 
 <body>
-  <!-- HEADER & NAVIGASI -->
-  <header style="position:relative;">
+  <!-- HEADER & NAVIGASI PERSIS GAYA SIG -->
+  <header id="mainHeader">
+
+    <!-- Main Navigation Bar -->
     <div class="wrap nav">
-      <a href="#" class="logo"><img src="Logo.png" alt="Logo">Assula Jaya Selalu</a>
-      <nav id="nv" aria-label="Navigasi utama">
-        <a href="#" class="on">Beranda</a>
-        <a href="#produk">Produk</a>
-        <a href="#cara-pesan">Cara Pesan</a>
-        <a href="#profil">Profil</a>
-        <a href="#kontak">Kontak</a>
-      </nav>
-      <a class="btn nav-cta" href="https://wa.me/6281234567890?text=Halo%20Admin%20PT%20Assula%20Jaya%20Selalu"
-        target="_blank" rel="noopener">Hubungi Admin</a>
-      <button id="mb" aria-label="Buka menu" aria-expanded="false">&#9776;</button>
-    </div>
-  </header>
+      <!-- Logo ala SIG -->
+      <a href="#" class="logo-sig" aria-label="Beranda PT Assula Jaya Selalu">
+        <img class="logo-sig-icon" src="Logo.png" alt="PT ASJ Logo">
+        <div class="logo-sig-brand">
+          <span class="logo-sig-text">AJS</span>
+          <span class="logo-sig-sub">Assula Jaya Selalu</span>
+        </div>
+      </a>
 
-  <!-- KONTEN UTAMA LANDING PAGE -->
-  <main id="app">
+      <!-- Menu Navigasi Persis SIG -->
+      <div class="sig-nav-wrap" id="sigNavWrap">
+        <ul class="sig-nav-menu">
+          <!-- 1. Tentang Kami (Dropdown) -->
+          <li class="sig-nav-item">
+            <a href="#profil" class="sig-nav-link">
+              Tentang Kami
+              <svg class="caret" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="sig-dropdown">
+              <a href="#profil">Sekilas Perusahaan</a>
+              <a href="#visi-misi">Visi &amp; Misi</a>
+              <a href="#profil">Tata Kelola &amp; Integritas</a>
+              <a href="#kontak">Manajemen &amp; Legalitas</a>
+            </div>
+          </li>
 
-    <!-- 1. HERO SLIDER BANNER (Dengan Hierarki Solution-First) -->
-    <section class="hs" aria-roledescription="carousel" aria-label="Sorotan perusahaan">
-      <div class="tr" id="tr">
-        <div class="sl"><img src="Foto1.jpg" alt="Pompa Industri"></div>
-        <div class="sl"><img src="Foto2.jpg" alt="Genset Industri"></div>
-        <div class="sl"><img src="Foto3.jpg" alt="Logo.png"></div>
-      </div>
-      
-      <div class="ov">
-        <div class="wrap">
-          <span class="ov-badge">PT Assula Jaya Selalu</span>
-          <!-- HEADLINE UTAMA: Menembak langsung solusi & value proposition -->
-          <h1>Solusi Cepat, Tepat, dan Andal untuk Kebutuhan Industri Anda.</h1>
-          <!-- SUB-HEADLINE: Menjelaskan peran perusahaan -->
-          <p class="t">Your Intelligent Supply & Distribution Partner — Menyediakan pasokan pompa industri, genset, panel listrik, dan instrumen teknik terpercaya.</p>
-          <div class="row">
-            <a class="btn" href="#produk">Lihat Katalog Produk</a>
-            <a class="btn ghost" href="#profil">Pelajari Lebih Lanjut</a>
-          </div>
+          <!-- 2. Keberlanjutan (Dropdown) -->
+          <li class="sig-nav-item">
+            <a href="#produk" class="sig-nav-link">
+              Keberlanjutan
+              <svg class="caret" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="sig-dropdown">
+              <a href="#produk">Inovasi Ramah Lingkungan</a>
+              <a href="#produk">Tanggung Jawab Sosial &amp; Lingkungan</a>
+              <a href="#produk">Standar Mutu &amp; K3L</a>
+            </div>
+          </li>
+
+          <!-- 3. Investor (Dropdown) -->
+          <li class="sig-nav-item">
+            <a href="#kontak" class="sig-nav-link">
+              Investor
+              <svg class="caret" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="sig-dropdown">
+              <a href="#kontak">Kinerja Keuangan &amp; Laporan</a>
+              <a href="#kontak">Informasi Saham &amp; Dividen</a>
+              <a href="#kontak">Hubungan Investor</a>
+            </div>
+          </li>
+
+          <!-- 4. Ruang Media (Dropdown) -->
+          <li class="sig-nav-item">
+            <a href="#produk" class="sig-nav-link">
+              Ruang Media
+              <svg class="caret" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="sig-dropdown">
+              <a href="#produk">Siaran Pers &amp; Berita</a>
+              <a href="#produk">Galeri Proyek &amp; Dokumentasi</a>
+              <a href="#kontak">Publikasi Resmi</a>
+            </div>
+          </li>
+
+          <!-- 5. Karir (Dropdown) -->
+          <li class="sig-nav-item">
+            <a href="#kontak" class="sig-nav-link">
+              Karir
+              <svg class="caret" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="sig-dropdown">
+              <a href="#kontak">Peluang Karir &amp; Magang</a>
+              <a href="#kontak">Budaya Kerja ASJ</a>
+            </div>
+          </li>
+
+          <!-- 6. Kebijakan (Dropdown) -->
+          <li class="sig-nav-item">
+            <a href="#kontak" class="sig-nav-link">
+              Kebijakan
+              <svg class="caret" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="sig-dropdown">
+              <a href="#kontak">Pedoman Etika Bisnis</a>
+              <a href="#kontak">Whistleblowing System</a>
+              <a href="#kontak">Kebijakan Privasi</a>
+            </div>
+          </li>
+
+          <!-- 7. PPID (Dropdown) -->
+          <li class="sig-nav-item">
+            <a href="#kontak" class="sig-nav-link">
+              PPID
+              <svg class="caret" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="sig-dropdown">
+              <a href="#kontak">Profil PPID</a>
+              <a href="#kontak">Permohonan Informasi Publik</a>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Action Buttons: EN Switcher & Search ala SIG -->
+        <div class="sig-actions">
+          <a href="#" class="sig-lang-badge" title="Switch language to English">EN</a>
+          <button class="sig-search-btn" id="sigSearchBtn" aria-label="Buka pencarian">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Search</span>
+          </button>
         </div>
       </div>
 
-      <button class="ar l" id="sp" aria-label="Slide sebelumnya">&#8249;</button>
-      <button class="ar r" id="sn" aria-label="Slide berikutnya">&#8250;</button>
-      <button class="pz" id="sz" aria-label="Jeda slide otomatis">Jeda</button>
-      <div class="dt">
-        <button aria-label="Slide 1" aria-current="true"></button>
-        <button aria-label="Slide 2"></button>
-        <button aria-label="Slide 3"></button>
+      <!-- Mobile Hamburger Button -->
+      <button id="mb" aria-label="Buka menu navigasi" aria-expanded="false">&#9776;</button>
+    </div>
+  </header>
+
+  <!-- KONTEN UTAMA LANDING PAGE (Dapat di-edit langsung di HTML ini) -->
+  <main id="app">
+
+    <!-- 1. HERO SLIDER BANNER FULL SCREEN -->
+    <section class="hs" aria-roledescription="carousel" aria-label="Sorotan perusahaan">
+      <div class="tr" id="tr">
+        <div class="sl"><img src="Foto1.jpg" alt="Operasional Industri PT ASJ"></div>
+        <div class="sl"><img src="Foto2.jpg" alt="Peralatan & Mesin Industri PT ASJ"></div>
+        <div class="sl"><img src="Foto3.jpg" alt="Fasilitas & Distribusi PT ASJ"></div>
+      </div>
+
+      <!-- Hero Content Overlay -->
+      <div class="ov">
+        <div class="wrap">
+          <h1>PT Assula Jaya Selalu</h1>
+          <p class="t">Your Intelligent Supply &amp; Distribution Partner <br> Solusi Cepat, Tepat, dan Andal untuk
+            Kebutuhan Industri Anda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TENTANG / PROFIL PERUSAHAAN -->
+    <section class="sec" id="profil">
+      <div class="wrap about-wrap">
+        <div class="about-head reveal fade-up">
+          <span class="about-eyebrow">Profil Perusahaan</span>
+          <h2>Your Intelligent Supply & Distribution Partner</h2>
+          <p class="about-lead-text">
+            <strong>PT Assula Jaya Selalu</strong> merupakan mitra supplier dan distributor terpadu yang menghadirkan
+            solusi cepat, tepat, dan andal untuk memenuhi berbagai kebutuhan bisnis dan industri Anda.
+          </p>
+        </div>
+
+        <div class="about-columns">
+          <div class="about-story reveal fade-left">
+            <p>
+              Didirikan pada awal tahun 2026 di Bekasi Timur, Jawa Barat, PT Assula Jaya Selalu berkomitmen membangun
+              fondasi bisnis yang kuat, transparan, dan berintegritas.
+            </p>
+            <p>
+              Sebagai mitra yang responsif, kami berfokus pada eksekusi presisi dalam menyediakan lini produk industri
+              lengkap — mulai dari <strong>Personal Protective Equipment (PPE) & Safety Sign, Lockout Tagout (LOTO),
+                perlengkapan Antistatic/ESD, Cutting Tools, Consumables & Packaging, hingga Industrial Chemical dan
+                Cleaning Equipment.</strong> Kepuasan pelanggan adalah prioritas utama dalam setiap langkah kami.
+            </p>
+            <div style="margin-top: 8px;">
+              <a class="btn ghost"
+                href="https://wa.me/6285121354746?text=Halo%20Admin,%20saya%20ingin%20berkonsultasi%20mengenai%20kebutuhan%20industri%20di%20PT%20Assula%20Jaya%20Selalu"
+                target="_blank" rel="noopener">
+                Konsultasi Kebutuhan Industri
+              </a>
+            </div>
+          </div>
+
+          <!-- Company Values (Sesuai PDF) -->
+          <div class="about-values-grid reveal stagger">
+            <div class="about-value-card">
+              <span class="about-value-num">01</span>
+              <h4>Accountability</h4>
+              <p>Menjalankan kegiatan usaha dengan tanggung jawab penuh, transparansi, dan profesionalisme tinggi.</p>
+            </div>
+            <div class="about-value-card">
+              <span class="about-value-num">02</span>
+              <h4>Service Excellent</h4>
+              <p>Mengutamakan kecepatan respon dan eksekusi tanpa mengorbankan kualitas pelayanan.</p>
+            </div>
+            <div class="about-value-card">
+              <span class="about-value-num">03</span>
+              <h4>Solution Oriented</h4>
+              <p>Berfokus pada solusi kebutuhan pelanggan dengan pendekatan yang fleksibel dan adaptif.</p>
+            </div>
+            <div class="about-value-card">
+              <span class="about-value-num">04</span>
+              <h4>Unity & Integrity</h4>
+              <p>Menjunjung tinggi integritas sebagai fondasi utama tanpa toleransi terhadap pelanggaran etika.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1446,11 +1972,13 @@
       </div>
     </div>
 
+
     <!-- 2. KATEGORI & KATALOG PRODUK -->
     <section class="sec" id="produk">
       <div class="wrap">
         <h2 class="reveal fade-up">Kategori Produk</h2>
-        <p class="lead reveal fade-up">Pilihan lini produk unggulan untuk memenuhi kebutuhan supply industri dan proyek Anda.</p>
+        <p class="lead reveal fade-up">Pilihan lini produk unggulan untuk memenuhi kebutuhan supply industri dan proyek
+          Anda.</p>
 
         <!-- Carousel Produk Industri -->
         <div class="pc reveal">
@@ -1460,7 +1988,7 @@
           <div class="pc-viewport">
             <div class="tr" id="pcTr">
 
-              <!-- Card 1 -->
+              <!-- Card Produk 1: Pompa Sentrifugal -->
               <a class="card"
                 href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Pompa%20Sentrifugal%20SK-150"
                 target="_blank" rel="noopener">
@@ -1472,15 +2000,19 @@
                 </div>
                 <div class="b">
                   <h3>Pompa Sentrifugal SK-150</h3>
-                  <p>Kapasitas debit tinggi untuk instalasi sirkulasi pabrik, pendingin mesin proses, dan irigasi komersial.</p>
+                  <p>Kapasitas debit tinggi untuk instalasi sirkulasi pabrik, pendingin mesin proses, dan irigasi
+                    komersial.</p>
                   <span class="pc-wa-btn">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
                     Pesan via WhatsApp
                   </span>
                 </div>
               </a>
 
-              <!-- Card 2 -->
+              <!-- Card Produk 2: Pompa Submersible -->
               <a class="card"
                 href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Pompa%20Submersible%20SK-40"
                 target="_blank" rel="noopener">
@@ -1492,15 +2024,19 @@
                 </div>
                 <div class="b">
                   <h3>Pompa Submersible SK-40</h3>
-                  <p>Pompa celup heavy-duty anti karat untuk drainase lumpur, sumur dalam industri, dan limbah terolah.</p>
+                  <p>Pompa celup heavy-duty anti karat untuk drainase lumpur, sumur dalam industri, dan limbah terolah.
+                  </p>
                   <span class="pc-wa-btn">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
                     Pesan via WhatsApp
                   </span>
                 </div>
               </a>
 
-              <!-- Card 3 -->
+              <!-- Card Produk 3: Genset Silent -->
               <a class="card"
                 href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Genset%20Diesel%20Silent%20100%20kVA"
                 target="_blank" rel="noopener">
@@ -1512,15 +2048,19 @@
                 </div>
                 <div class="b">
                   <h3>Genset Diesel Silent 100 kVA</h3>
-                  <p>Pasokan daya cadangan handal dengan kanopi kedap suara, proteksi ATS otomatis, dan efisiensi bahan bakar.</p>
+                  <p>Pasokan daya cadangan handal dengan kanopi kedap suara, proteksi ATS otomatis, dan efisiensi bahan
+                    bakar.</p>
                   <span class="pc-wa-btn">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
                     Pesan via WhatsApp
                   </span>
                 </div>
               </a>
 
-              <!-- Card 4 -->
+              <!-- Card Produk 4: Panel Distribusi LVMDP -->
               <a class="card"
                 href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Panel%20Distribusi%20LVMDP"
                 target="_blank" rel="noopener">
@@ -1532,15 +2072,19 @@
                 </div>
                 <div class="b">
                   <h3>Panel Distribusi LVMDP</h3>
-                  <p>Panel induk tegangan rendah fabrikasi presisi dengan komponen bersertifikasi SNI dan IEC bergaransi resmi.</p>
+                  <p>Panel induk tegangan rendah fabrikasi presisi dengan komponen bersertifikasi SNI dan IEC bergaransi
+                    resmi.</p>
                   <span class="pc-wa-btn">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
                     Pesan via WhatsApp
                   </span>
                 </div>
               </a>
 
-              <!-- Card 5 -->
+              <!-- Card Produk 5: Motor Listrik Induksi -->
               <a class="card"
                 href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Motor%20Induksi%203-Phase%20IE3"
                 target="_blank" rel="noopener">
@@ -1552,15 +2096,19 @@
                 </div>
                 <div class="b">
                   <h3>Motor Induksi 3-Phase IE3</h3>
-                  <p>Motor listrik efisiensi premium untuk conveyor, kompresor, mixer, dan continuous heavy duty manufacturing.</p>
+                  <p>Motor listrik efisiensi premium untuk conveyor, kompresor, mixer, dan continuous heavy duty
+                    manufacturing.</p>
                   <span class="pc-wa-btn">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
                     Pesan via WhatsApp
                   </span>
                 </div>
               </a>
 
-              <!-- Card 6 -->
+              <!-- Card Produk 6: Industrial Valve & Piping -->
               <a class="card"
                 href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Industrial%20Control%20Valve%20Series"
                 target="_blank" rel="noopener">
@@ -1572,9 +2120,13 @@
                 </div>
                 <div class="b">
                   <h3>Industrial Control Valve Series</h3>
-                  <p>Katup industri gate, ball, check, dan butterfly valve berstandar ANSI/JIS untuk kontrol fluida &amp; uap bertekanan.</p>
+                  <p>Katup industri gate, ball, check, dan butterfly valve berstandar ANSI/JIS untuk kontrol fluida
+                    &amp; uap bertekanan.</p>
                   <span class="pc-wa-btn">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" /></svg>
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>
                     Pesan via WhatsApp
                   </span>
                 </div>
@@ -1593,7 +2145,8 @@
       <div class="wrap">
         <span class="about-eyebrow">Cara Pemesanan</span>
         <h2 class="reveal fade-up">Pesan langsung lewat admin</h2>
-        <p class="lead reveal fade-up">Tanpa keranjang belanja. Anda berbicara langsung dengan admin sales yang siap memberi penawaran terbaik.</p>
+        <p class="lead reveal fade-up">Tanpa keranjang belanja. Anda berbicara langsung dengan admin sales yang siap
+          memberi penawaran terbaik.</p>
 
         <div class="steps reveal stagger">
           <div class="step-card">
@@ -1621,61 +2174,8 @@
 
         <div class="wam reveal fade-up">
           <b>Contoh pesan otomatis:</b><br>
-          Halo Admin PT Assula Jaya Selalu, saya ingin bertanya/memesan produk [Nama Produk]. Bisa bantu infokan spesifikasi dan penawarannya?
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. TENTANG / PROFIL PERUSAHAAN -->
-    <section class="sec" id="profil">
-      <div class="wrap about-wrap">
-        <div class="about-head reveal fade-up">
-          <span class="about-eyebrow">Profil Perusahaan</span>
-          <h2>Mitra Pengadaan &amp; Distribusi Industri yang Terpercaya</h2>
-          <p class="about-lead-text">
-            <strong>PT Assula Jaya Selalu</strong> adalah perusahaan supply &amp; distribusi teknik terpadu yang berdedikasi menyediakan solusi peralatan industri andal — mencakup pompa industri, genset power system, panel distribusi listrik, hingga instrumen perpipaan dan mekanikal.
-          </p>
-        </div>
-
-        <div class="about-columns">
-          <div class="about-story reveal fade-left">
-            <p>
-              Berawal dari komitmen memberikan kemudahan pasokan suku cadang mesin, kini kami telah dipercaya berbagai sektor manufaktur, kontraktor MEP, perkebunan, dan instansi proyek infrastruktur di Indonesia.
-            </p>
-            <p>
-              Pendekatan kami sederhana dan berorientasi hasil: <strong>solusi teknis tepat guna, transparansi ketersediaan stok, serta kecepatan respon.</strong> Kami memastikan setiap produk yang dikirim telah teruji spesifikasinya dan siap mendukung efisiensi operasional bisnis Anda.
-            </p>
-            <div style="margin-top: 8px;">
-              <a class="btn ghost"
-                href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20berkonsultasi%20mengenai%20kebutuhan%20teknis%20di%20PT%20Assula%20Jaya%20Selalu"
-                target="_blank" rel="noopener">
-                Konsultasi Kebutuhan Industri
-              </a>
-            </div>
-          </div>
-
-          <div class="about-values-grid reveal stagger">
-            <div class="about-value-card">
-              <span class="about-value-num">01</span>
-              <h4>Standar Mutu Resmi</h4>
-              <p>Produk bersertifikasi dan bergaransi resmi dari pabrikan terpercaya.</p>
-            </div>
-            <div class="about-value-card">
-              <span class="about-value-num">02</span>
-              <h4>Dukungan Teknis</h4>
-              <p>Rekomendasi kapasitas teknis yang presisi sesuai kebutuhan lapangan.</p>
-            </div>
-            <div class="about-value-card">
-              <span class="about-value-num">03</span>
-              <h4>Distribusi Tepat Waktu</h4>
-              <p>Pengiriman cepat dan aman langsung ke lokasi pabrik atau proyek Anda.</p>
-            </div>
-            <div class="about-value-card">
-              <span class="about-value-num">04</span>
-              <h4>Layanan Responsif</h4>
-              <p>Komunikasi langsung dengan tim sales teknis tanpa birokrasi berbelit.</p>
-            </div>
-          </div>
+          Halo Admin PT Assula Jaya Selalu, saya ingin bertanya/memesan produk [Nama Produk]. Bisa bantu infokan
+          spesifikasi dan penawarannya?
         </div>
       </div>
     </section>
@@ -1687,14 +2187,17 @@
           <div>
             <p class="cta-band-eyebrow">Siap Memulai?</p>
             <h2>Butuh penawaran untuk proyek Anda?</h2>
-            <p>Tim admin kami siap membantu — dari rekomendasi produk hingga estimasi harga dan pengiriman ke lokasi proyek.</p>
+            <p>Tim admin kami siap membantu — dari rekomendasi produk hingga estimasi harga dan pengiriman ke lokasi
+              proyek.</p>
           </div>
           <div class="cta-band-actions">
             <a class="btn-wa-full"
               href="https://wa.me/6281234567890?text=Halo%20Admin%20PT%20Assula%20Jaya%20Selalu,%20saya%20ingin%20meminta%20penawaran"
               target="_blank" rel="noopener" aria-label="Chat admin via WhatsApp">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#fff" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#fff"
+                aria-hidden="true">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
               </svg>
               Chat via WhatsApp
             </a>
@@ -1711,19 +2214,21 @@
     <div class="wrap">
       <div class="footer-grid">
 
+        <!-- Brand -->
         <div class="footer-brand">
           <div class="footer-brand-logo">
-            <img src="Logo.png" alt="Logo PT Assula Jaya Selalu">
+            <img src="Foto/Logo.png" alt="Logo PT Assula Jaya Selalu">
             <span>Assula Jaya Selalu</span>
           </div>
-          <p>Pemasok pompa industri, genset, panel listrik, dan perkakas teknik sejak 2009. Solusi cepat, tepat, dan andal untuk kebutuhan industri Anda.</p>
+          <p>Pemasok pompa industri, genset, panel listrik, dan perkakas teknik sejak 2009. Solusi cepat, tepat, dan
+            andal untuk kebutuhan industri Anda.</p>
           <div class="footer-brand-contact">
             <div class="footer-contact-row">
               <svg viewBox="0 0 24 24">
                 <path d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" />
                 <circle cx="12" cy="10" r="2.5" />
               </svg>
-              Jl. Industri Raya No. 21, Bandung
+              Perumahan Margahayu - Jalan Mahoni 5 Blok C No. 448, BEKASI, Indonesia.
             </div>
             <div class="footer-contact-row">
               <svg viewBox="0 0 24 24">
@@ -1741,6 +2246,7 @@
           </div>
         </div>
 
+        <!-- Jelajahi -->
         <div>
           <h4>Jelajahi</h4>
           <ul>
@@ -1752,6 +2258,7 @@
           </ul>
         </div>
 
+        <!-- Produk -->
         <div>
           <h4>Produk</h4>
           <ul>
@@ -1762,12 +2269,13 @@
           </ul>
         </div>
 
+        <!-- Ikuti Kami -->
         <div>
           <h4>Ikuti Kami</h4>
           <ul>
             <li><a href="#" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="#" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a href="youtube.com" target="_blank" rel="noopener">YouTube</a></li>
             <li><a href="https://wa.me/6281234567890" target="_blank" rel="noopener">WhatsApp Admin</a></li>
           </ul>
         </div>
@@ -1776,64 +2284,81 @@
 
       <div class="footer-bottom">
         <span>© 2026 PT Assula Jaya Selalu. Hak cipta dilindungi.</span>
-        <span>Dibuat dengan sepenuh hati untuk industri Indonesia.</span>
       </div>
     </div>
   </footer>
 
-  <!-- JAVASCRIPT -->
+  <!-- JAVASCRIPT RINGAN (Hanya untuk Slider & Menu Mobile) -->
   <script>
-    // Mobile Menu
-    const mbBtn = document.getElementById("mb");
-    const nvMenu = document.getElementById("nv");
+    // ── Mobile Menu ────────────────────────────────────────
+    // ── Header Scroll Dynamic Effect (Solid on Scroll) ──
+    const mainHeader = document.getElementById("mainHeader");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 40) {
+        mainHeader.classList.add("scrolled");
+      } else {
+        mainHeader.classList.remove("scrolled");
+      }
+    }, { passive: true });
 
-    if (mbBtn && nvMenu) {
+    // ── Mobile Menu SIG ────────────────────────────────────
+    const mbBtn = document.getElementById("mb");
+    const sigNavWrap = document.getElementById("sigNavWrap");
+
+    if (mbBtn && sigNavWrap) {
+      // Toggle buka/tutup
       mbBtn.addEventListener("click", () => {
-        const isOpen = nvMenu.classList.toggle("o");
+        const isOpen = sigNavWrap.classList.toggle("o");
         mbBtn.setAttribute("aria-expanded", String(isOpen));
         mbBtn.innerHTML = isOpen ? "&#10005;" : "&#9776;";
       });
 
-      nvMenu.querySelectorAll("a").forEach(link => {
+      // Mobile dropdown toggler
+      sigNavWrap.querySelectorAll(".sig-nav-item").forEach(item => {
+        const link = item.querySelector(".sig-nav-link");
+        const dropdown = item.querySelector(".sig-dropdown");
+        if (link && dropdown) {
+          link.addEventListener("click", (e) => {
+            if (window.innerWidth <= 820) {
+              e.preventDefault();
+              item.classList.toggle("active-mobile");
+            }
+          });
+        }
+      });
+
+      // Tutup saat klik salah satu link dropdown
+      sigNavWrap.querySelectorAll(".sig-dropdown a").forEach(link => {
         link.addEventListener("click", () => {
-          nvMenu.classList.remove("o");
+          sigNavWrap.classList.remove("o");
           mbBtn.setAttribute("aria-expanded", "false");
           mbBtn.innerHTML = "&#9776;";
         });
       });
 
+      // Tutup saat klik di luar nav
       document.addEventListener("click", e => {
-        if (!nvMenu.contains(e.target) && e.target !== mbBtn) {
-          nvMenu.classList.remove("o");
+        if (!sigNavWrap.contains(e.target) && e.target !== mbBtn) {
+          sigNavWrap.classList.remove("o");
           mbBtn.setAttribute("aria-expanded", "false");
           mbBtn.innerHTML = "&#9776;";
         }
       });
     }
 
-    // Active link saat scroll
-    (function () {
-      const navLinks = document.querySelectorAll("#nv a[href^='#']");
-      const sectionIds = Array.from(navLinks).map(a => a.getAttribute("href").slice(1));
-      const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
-
-      function updateActive() {
-        const scrollY = window.scrollY + 80;
-        let activeId = sectionIds[0];
-
-        sections.forEach(sec => {
-          if (sec.offsetTop <= scrollY) activeId = sec.id;
-        });
-
-        navLinks.forEach(a => {
-          const isActive = a.getAttribute("href") === "#" + activeId;
-          a.classList.toggle("on", isActive);
-        });
-      }
-
-      window.addEventListener("scroll", updateActive, { passive: true });
-      updateActive();
-    })();
+    // ── Search Button Quick Trigger ──
+    const searchBtn = document.getElementById("sigSearchBtn");
+    if (searchBtn) {
+      searchBtn.addEventListener("click", () => {
+        const term = prompt("Cari produk atau informasi di PT Assula Jaya Selalu:", "");
+        if (term && term.trim() !== "") {
+          const produkSec = document.getElementById("produk");
+          if (produkSec) {
+            produkSec.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      });
+    }
 
     // Hero Slider Carousel
     let index = 0;
@@ -1876,7 +2401,7 @@
 
     runSlider();
 
-    // Product Carousel
+    // Product carousel
     (function () {
       const tr = document.getElementById("pcTr");
       const prevBtn = document.getElementById("pcPrev");
@@ -1912,6 +2437,7 @@
         if (idx > max - 1) idx = max - 1;
         if (idx < 0) idx = 0;
 
+        // Hitung perpindahan akurat berdasarkan ukuran card + gap aktual
         if (cards[0] && cards[1]) {
           const cardOffset = cards[1].offsetLeft - cards[0].offsetLeft;
           tr.style.transform = `translateX(-${idx * cardOffset}px)`;
@@ -1919,6 +2445,7 @@
           tr.style.transform = `translateX(-${idx * cards[0].offsetWidth}px)`;
         }
 
+        // Render dots pagination
         dotsWrap.innerHTML = "";
         for (let i = 0; i < max; i++) {
           const b = document.createElement("button");
@@ -1952,7 +2479,7 @@
         };
       }
 
-      // Touch / Swipe
+      // Touch / swipe gesture support
       let startX = 0;
       let currentX = 0;
       let isSwiping = false;
@@ -1984,28 +2511,32 @@
         });
       }
 
-      window.addEventListener("resize", updateView);
+      window.addEventListener("resize", () => {
+        updateView();
+      });
+
+      // Inisialisasi awal
       updateView();
     })();
 
-    // Scroll Animations
+    // Scroll-triggered reveal animations (Intersection Observer)
     (function () {
       if (typeof IntersectionObserver === "undefined") return;
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const els = document.querySelectorAll(".reveal, .stagger");
       if (reduce) {
-        els.forEach(e => e.classList.add("visible"));
+        els.forEach(function (e) { e.classList.add("visible"); });
         return;
       }
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+      const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
             io.unobserve(entry.target);
           }
         });
       }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-      els.forEach(e => io.observe(e));
+      els.forEach(function (e) { io.observe(e); });
     })();
   </script>
 </body>
